@@ -1,3 +1,3 @@
-import * as refences from '../../environments/environment';
+import * as apiUrl  from '../../environments/environment';
 
-export const urlClient = `${refences}/client`;
+export const urlClient = `${apiUrl}/client`;
