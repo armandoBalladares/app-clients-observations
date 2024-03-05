@@ -7,23 +7,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { ClientService } from './services/client.service';
 
-//import { AppRoutingModule } from './app-routing.module';
-
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes)],
 };
-
-
-@NgModule({
-  declarations: [
-    //AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    //AppRoutingModule,
-    HttpClientModule
-  ],
-  providers: [ClientService],
-  bootstrap: []// AppComponent
-})
-export class AppModule { }
