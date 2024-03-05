@@ -17,8 +17,7 @@ export class ClientService {
   const headers = new HttpHeaders()
   .set('Content-Type', 'application/json')
   .set('Accept', 'application/json')
-  .set('Access-Control-Allow-Origin', 'https://localhost:7240');
-  // Definir los parámetros
+  //.set('Access-Control-Allow-Origin', 'https://localhost:7240');
   //const params = new HttpParams().set('p1', 'val1');
   return this.http.get<Client[]>(this.apiUrl, { headers }  );
   }
@@ -38,5 +37,5 @@ export class ClientService {
   deleteClient(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
-
+  
 }

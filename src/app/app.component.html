@@ -1,5 +1,5 @@
 
-<div class="container" style="border: 2px solid red">
+<div class="container">
     <div class="row">
         <div class="col">
             <div class="input-group">
@@ -9,7 +9,9 @@
                 placeholder="search client"
                 aria-label="search clients">
                 <button class="btn btn-outline-primary" type="button" (click)="searchClient()">Search</button>
-                <button class="btn btn-outline-success" type="button">Add</button>
+                <button class="btn btn-outline-success" type="button"
+                data-bs-toggle="modal" data-bs-target="#exampleModal"
+                >Add</button>
               </div>
         </div>
     </div>    
@@ -42,13 +44,71 @@
             <button type="button" class="btn btn-primary btn-sm" (click)="true">
               <i class="bi bi-pencil"></i> Edit
             </button>
-            <!-- deleteActionClient(cliente.id) -->
-            <button type="button" class="btn btn-danger btn-sm" (click)="true">
+            <!--  -->
+            <button type="button" class="btn btn-danger btn-sm" (click)="deleteActionClient(cliente?.id)">
               <i class="bi bi-trash"></i> Delete
             </button>
           </td>
         </tr>
       </tbody>
     </table>
+  </div>
+  
+
+
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Client</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <!--#formAdmin="NgForm"-->
+          <form (ngSubmit)="true" >
+            <div class="mb-3">
+              <label for="name" class="form-label">Name:</label>
+              <input type="text" class="form-control" id="name" name="name" required
+              [(ngModel)]="client.name"
+              #name="ngModel"
+              >
+            </div>
+            <div class="mb-3">
+              <label for="lastName" class="form-label">Last Name:</label>
+              <input type="text" class="form-control" id="lastName" name="lastName" required
+              [(ngModel)]="client.lastName"
+              #lastName="ngModel"
+              >
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone:</label>
+              <input type="tel" class="form-control" id="phone" name="phone" required
+              [(ngModel)]="client.phone"
+              #phone="ngModel">
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email:</label>
+              <input type="email" class="form-control" id="email" name="email" required
+              [(ngModel)]="client.email"
+              #email="ngModel">
+            </div>
+        <!--    
+            <div class="mb-3">
+              <label for="comment" class="form-label">Comment:</label>
+              <textarea class="form-control" id="comment" name="comment"
+              [(ngModel)]="client.comment"
+              #comment="ngModel"></textarea>
+            </div>
+        -->
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary"
+          (click)="manageClient('add')" data-bs-dismiss="modal">Save changes</button>
+        </div>
+      </div>
+    </div>
   </div>
   

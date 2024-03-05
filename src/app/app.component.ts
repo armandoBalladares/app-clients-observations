@@ -1,10 +1,10 @@
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, ComponentFactoryResolver, NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ClientService } from './services/client.service';
 import { Client } from './models/client.model';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, NgIf } from '@angular/common';
-import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, NgForm, NgModel, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +24,17 @@ import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 })
 export class AppComponent {
   clients?: Client[];
+  public client?: any = {
+    id: 0,  
+    name: '',
+    lastName: '',
+    phone: '',
+    email: '',
+    archived: false,
+    created: new Date(),
+    updated: '',
+    deleted: ''
+  };
   termSearchLastName?: string = "";
 
   constructor(private clientService: ClientService ) { }
@@ -33,7 +44,13 @@ export class AppComponent {
   }
 
   listClients(): void {
-    this.clientService.listClients().subscribe(cli => this.clients = cli );
+    this.clientService.listClients().subscribe((cli) => {
+      let listAux: any [] = []; 
+      cli.forEach( item => {
+        if (item?.archived===false) listAux.push(item);
+      })
+      this.clients = listAux;
+    });
   }
 
   addClient(nombre: string): void {
@@ -49,8 +66,11 @@ export class AppComponent {
 
   }
 
-  deleteActionClient(id?: number | null | undefined ): void {
-
+  deleteActionClient(id?: any ): void {
+    if (id===0 || id=== null || id===undefined)return;
+    this.clientService.deleteClient( id ).subscribe( (res) => {
+      this.listClients();
+    });
   }
 
   searchClient(): void {
@@ -71,7 +91,18 @@ export class AppComponent {
     if ( auxClient.length > 0 ) {
       this.clients = auxClient;
     }
+  }
 
+  manageClient(action?: string | any ): void {
+    console.warn( 'Action ', action, ' ', this.client  );
+    if ( action === 'add') {
+      this.clientService.addClient( this.client ).subscribe( (res) => {
+        console.warn('response ', ' ', res );
+        this.listClients();
+      });
+    } else if ( action === 'edit' ) {
+       
+    }
   }
 
 }
