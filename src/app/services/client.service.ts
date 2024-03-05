@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { urlClient } from '../shared/urls';
 import { Client } from '../models/client.model';
 
 
@@ -9,19 +8,31 @@ import { Client } from '../models/client.model';
   providedIn: 'root'
 })
 export class ClientService {
-  private apiUrl = urlClient;
+
+  private apiUrl = 'https://localhost:7240/api/client';
+
   constructor(private http: HttpClient) { }
   
   listClients(): Observable<Client[]> {
-    return this.http.get<Client[]>(this.apiUrl);
+  const headers = new HttpHeaders()
+  .set('Content-Type', 'application/json')
+  .set('Accept', 'application/json')
+  .set('Access-Control-Allow-Origin', 'https://localhost:7240');
+  // Definir los parámetros
+  //const params = new HttpParams().set('p1', 'val1');
+  return this.http.get<Client[]>(this.apiUrl, { headers }  );
   }
 
   addClient(cli: Client): Observable<Client> {
-    return this.http.post<Client>(this.apiUrl, cli);
+    const headers = new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    .set('Accept', 'application/json');
+    return this.http.post<Client>(this.apiUrl, cli, { headers } );
   }
 
   updateClient(id: number, client: Client): Observable<Client> {
-    return this.http.put<Client>(`${this.apiUrl}/${id}`, client );
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.put<Client>(`${this.apiUrl}/${id}`, client, { headers });
   }
 
   deleteClient(id: number): Observable<any> {
