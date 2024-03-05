@@ -36,6 +36,7 @@ export class AppComponent {
     deleted: ''
   };
   termSearchLastName?: string = "";
+  public action?: string = 'add';
 
   constructor(private clientService: ClientService ) { }
 
@@ -62,8 +63,16 @@ export class AppComponent {
     this.clientService.deleteClient(id).subscribe( ( response ) => this.listClients());
   }
 
-  editActionClient(id?: number | null | undefined ): void {
-
+  editActionClient(id?: any | null | undefined ): void {
+    let foundClient = this.clients?.find( (res) => res?.id===id); 
+    if ( foundClient !== undefined ) {
+      this.client.id = foundClient?.id;
+      this.client.name = foundClient?.name;
+      this.client.lastName = foundClient.lastName;
+      this.client.phone = foundClient?.phone;
+      this.client.email = foundClient?.email;
+      this.action = 'edit';
+    }
   }
 
   deleteActionClient(id?: any ): void {
@@ -82,7 +91,6 @@ export class AppComponent {
     let foundClients = this.clients?.forEach( (item ) => {
       let auxName = item?.lastName?.toString().toLocaleLowerCase().trim();
       let auxTermSearch =  this.termSearchLastName?.toString().toLocaleLowerCase().trim();
-      console.log( auxName, ' ', auxTermSearch )
       if( auxName === auxTermSearch ) {
         auxClient.push(item);
       }
@@ -93,16 +101,21 @@ export class AppComponent {
     }
   }
 
-  manageClient(action?: string | any ): void {
-    console.warn( 'Action ', action, ' ', this.client  );
-    if ( action === 'add') {
+  manageClient(act?: string | any, id?: any ): void {
+    if ( act === 'add' && this.action === 'add' ) {
       this.clientService.addClient( this.client ).subscribe( (res) => {
-        console.warn('response ', ' ', res );
         this.listClients();
+        this.action = 'add';
       });
-    } else if ( action === 'edit' ) {
-       
     }
+
+    if ( this.action === 'edit' ) {
+      this.clientService.updateClient( this.client.id, this.client ).subscribe( ( res )=> {
+        this.listClients();
+        this.action = 'add';
+      });
+    }
+
   }
 
 }

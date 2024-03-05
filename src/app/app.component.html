@@ -41,7 +41,9 @@
           <td>{{ cliente?.phone }}</td>
           <td>{{ cliente?.email }}</td>
           <td>
-            <button type="button" class="btn btn-primary btn-sm" (click)="true">
+            <button type="button" class="btn btn-primary btn-sm" 
+            (click)="editActionClient(cliente?.id)"
+            data-bs-toggle="modal" data-bs-target="#exampleModal">
               <i class="bi bi-pencil"></i> Edit
             </button>
             <!--  -->
