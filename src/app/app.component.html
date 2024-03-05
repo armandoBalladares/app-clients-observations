@@ -1,1 +1,54 @@
-<button class="btn btn-primary">Nice</button>
+
+<div class="container" style="border: 2px solid red">
+    <div class="row">
+        <div class="col">
+            <div class="input-group">
+                <input [(ngModel)]="termSearchLastName" type="text"
+                #ctrl="ngModel"
+                class="form-control" 
+                placeholder="search client"
+                aria-label="search clients">
+                <button class="btn btn-outline-primary" type="button" (click)="searchClient()">Search</button>
+                <button class="btn btn-outline-success" type="button">Add</button>
+              </div>
+        </div>
+    </div>    
+</div>    
+
+<br>
+<br>
+
+<div class="container">
+    <h1>CLients List</h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">LastName</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Email</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clients">
+          <td>{{ cliente?.id }}</td>
+          <td>{{ cliente?.name }}</td>
+          <td>{{ cliente?.lastName }}</td>
+          <td>{{ cliente?.phone }}</td>
+          <td>{{ cliente?.email }}</td>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm" (click)="true">
+              <i class="bi bi-pencil"></i> Edit
+            </button>
+            <!-- deleteActionClient(cliente.id) -->
+            <button type="button" class="btn btn-danger btn-sm" (click)="true">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
