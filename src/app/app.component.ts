@@ -106,16 +106,28 @@ export class AppComponent {
       this.clientService.addClient( this.client ).subscribe( (res) => {
         this.listClients();
         this.action = 'add';
+        this.resetForm();
       });
     }
-
     if ( this.action === 'edit' ) {
       this.clientService.updateClient( this.client.id, this.client ).subscribe( ( res )=> {
         this.listClients();
         this.action = 'add';
+        this.resetForm();
       });
     }
+  }
 
+  resetForm(): void {
+    this.client.id = 0;
+    this.client.name = '';
+    this.client.lastName = '';
+    this.client.phone = '';
+    this.client.email = '';
+    this.client.archived = false,
+    this.client.created = new Date();
+    this.client.updated = '';
+    this.client.deleted = '';
   }
 
 }
